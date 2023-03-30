@@ -1,0 +1,1 @@
+avrdude -p t461a -c avrisp -b 19200 -P $TINY_PORT -U eeprom:w:main_eeprom.hex:i

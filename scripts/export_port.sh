@@ -1,0 +1,1 @@
+export TINY_PORT=${1}
