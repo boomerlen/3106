@@ -1,1 +1,1 @@
-avrdude -p t461a -c avrisp -b 19200 -P $TINY_PORT -U lock:w:main_lock.hex:i
+avrdude -p t461a -c avrisp -b 19200 -P $TINY_PORT -U lock:w:build/bin/main_lock.hex:i
