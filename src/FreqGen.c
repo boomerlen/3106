@@ -41,12 +41,7 @@ void freqgen_disable() {
     TCCR1B &= ~(_BV(CS13) | _BV(CS12) | _BV(CS11) | _BV(CS10));
 }
 
-void freqgen_set(int f_khz) {
-    // f is in KHz
-    
-    // Do some conversion
-    uint16_t n = f_khz & 0xFFFF;
-
+void freqgen_set(uint16_t top) {
     _timerFastMode();
-    _timerTopSet(n);
+    _timerTopSet(top);
 }

@@ -8,7 +8,7 @@
 #ifndef AC_H
 #define AC_H
 
-#include <stdint.h>
+#include <stdbool.h>
 
 void AC_setup();
 

@@ -9,13 +9,15 @@
 /////////////////
 
 // Comment this out for AC sweep
-#define MODE_SINGLE_SHOT
+//#define MODE_SINGLE_SHOT
+// Specified at compilation
 
 #include <avr/io.h>
 
 #include "include/FreqGen.h"
 #include "include/GPIO.h"
 #include "include/delay.h"
+#include "include/Display.h"
 
 #ifdef MODE_SINGLE_SHOT
 #include "include/ADC.h"
@@ -28,15 +30,22 @@
 // Clock Setup //
 /////////////////
 
+// This flag is used to configure some of the low-level drivers
+//#define F_CPU 1000000UL // Slow clock - 1MHz
+// Now specified at compiler invokation
+
+// #define F_CPU 8000000UL // Fast clock - 8MHz
+
 // Set fuses appropriately
 #ifdef MODE_SINGLE_SHOT
+// Specified at compilation
 
 // Slow mode
 // Defaults are fine. Result is 1MHz CPU clock
 FUSES = { 
     .low = FUSE_SELFPRGEN, // Enables self-programming
     .high = HFUSE_DEFAULT,
-    .extended = EFUSE_DEFAULT,
+    .extended = 0x62,
 };
 #else
 
@@ -81,6 +90,10 @@ FUSES = {
 // LB_MODE_1 does not enable any lock bits
 LOCKBITS = LB_MODE_1;
 
+void convert(uint16_t adc_val) {
+    return;
+}
+
 #ifndef MODE_SINGLE_SHOT
 void AC_Sweep() {
     // Main function for the AC Sweep mode of operation
@@ -94,6 +107,7 @@ void ADC_SingleShot() {
     ADC_setup();
     freqgen_setup();
     GPIO_setup();
+    display_setup();
 
     freqgen_set(FREQGEN_N);
 
@@ -106,9 +120,33 @@ void ADC_SingleShot() {
             freqgen_enable();
 
             // Wait approx 1ms for steady state
+            delay_ms(1);
 
+            // Enable peak holding
+            GPIO_pk_clr_off();
 
+            // Wait approx 5ms to stabilise
+            delay_ms(5);
+
+            // Turn off freqgen to decrease noise
+            freqgen_disable();
+
+            // Here we would enable some low-noise mode
+
+            // Sample ADC
             uint16_t adc_val = ADC_sample();
+
+            // Clear peak holder
+            GPIO_pk_clr_on();
+
+            // Do some calculation
+            convert(adc_val);
+
+            // Output to display
+            display_set_word(5);
+
+            // Wait a bit to avoid triggering too many times in one press
+            delay_ms(300);
         }
     }
 
@@ -117,10 +155,20 @@ void ADC_SingleShot() {
 
 int main() {
 
+    // Test code
+    GPIO_setup();
+
+    while (1) {
+        GPIO_pk_clr_on();
+        delay_ms(1000);
+        GPIO_pk_clr_off();
+        delay_ms(1000);
+    }
+
 #ifdef MODE_SINGLE_SHOT
-    ADC_SingleShot();
+    //ADC_SingleShot();
 #else
     AC_Sweep();
 #endif
 
-}
+}   
