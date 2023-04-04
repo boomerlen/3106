@@ -182,6 +182,9 @@ void ADC_SingleShot() {
 
     while (1) {
         if (GPIO_sample()) {
+            // Blink isn't so important as to interrupt this
+            cli();
+
             // Disable peak holding
             GPIO_pk_clr_on();
 
@@ -213,6 +216,9 @@ void ADC_SingleShot() {
 
             // Output to display
             display_set_word(5);
+
+            // Blink can keep on going
+            sei();
 
             // Wait a bit to avoid triggering too many times in one press
             delay_ms(300);
