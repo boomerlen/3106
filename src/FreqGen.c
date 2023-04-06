@@ -11,26 +11,36 @@
 
 #include <avr/io.h>
 
+// This is implemented using tiny461a Timer (counter) 1
+// This file does no conversion to achieve a desired frequency
+// It simply takes the passed top value and places it directly
+// into the required register.
+
+// Decisions:
+// 1. Output is going into OC1D
+// 2. Want to use Normal Mode and "toggle Compare Output Mode"
+
+
+
 void _timerTopSet(uint16_t top) {
     // Split into upper and lower
     uint8_t high = (top & 0xFF00) > 8;
     uint8_t low = (top & 0xFF);
 
     TC1H = high;
-    OCR1A = low;
-}
-
-void _timerFastMode() {
-    PLLCSR |= _BV(PLLE);
-    PLLCSR |= _BV(PCKE);
-}
-
-void _timerSlowMode() {
-    PLLCSR &= ~_BV(PCKE);
+    OCR1D = low;
 }
 
 void freqgen_setup() {
-    TCCR1A |= _BV(COM1A0);
+    // Clear prescaler
+    TCCR1B |= _BV(PSR1);
+
+    // Set OCW1D to toggle on compare match mode
+    TCCR1C |= _BV(COM1D0);
+
+    // Ensure PLL is off 
+    // (Using 1MHz system clock as source)
+    PLLCSR &= ~(_BV(PCKE) | _BV(PLLE));
 }
 
 void freqgen_enable() {
@@ -42,6 +52,5 @@ void freqgen_disable() {
 }
 
 void freqgen_set(uint16_t top) {
-    _timerFastMode();
     _timerTopSet(top);
 }

@@ -19,6 +19,7 @@
 #include "include/GPIO.h"
 #include "include/delay.h"
 #include "include/Display.h"
+#include "include/blink.h"
 
 #ifdef MODE_SINGLE_SHOT
 #include "include/ADC.h"
@@ -64,7 +65,7 @@ FUSES = {
 // Pulse generator setup //
 ///////////////////////////
 
-// freqgen_set(n) depends on peripheral clock frequency
+// freqgen_set(n) depends on peripheral clock frequency (and any prescaling)
 // The output pulse generator is nominally 30kHz but will have
 // quantisation errors as detailed in the table below.
 // ----------------------------
@@ -74,7 +75,7 @@ FUSES = {
 // | 64MHz | 1067 | 29.9906 kHz | --> Not realisable with 10-bit timer1
 // ------------------------------
 
-// Note that at 64MHz, the lowest clock rate deliverable is 31.25kHz.
+// Note that at 64MHz, the lowest clock rate deliverable is 31.25kHz (n = 1023).
 // Consequently, 64MHz is too fast for single measurement operation centred at 30kHz
 // It is also unnecessary.
 
@@ -94,74 +95,6 @@ LOCKBITS = LB_MODE_1;
 void convert(uint16_t adc_val) {
     return;
 }
-
-#define PIN_BLINK PB5
-
-static bool led_on = true;
-
-ISR(TIMER0_COMPA_vect) {
-    cli();
-    TCNT0L = 0;
-    TCNT0H = 0;
-
-    if (led_on) {
-        PORTB &= _BV(PIN_BLINK);
-    } else {
-        PORTB |= _BV(PIN_BLINK);
-    }
-
-    led_on = ~led_on;
-    sei();
-}
-
-// Blink - flick on / off LED
-void blink_setup() {
-    // Have to do some sort of nasty division type thing
-    // Assuming slow CPU clock
-    
-    // Using /1024 prescaling, one s = 977 pulses
-    // There will be some innacuraccy here with large counts, should be fine though
-    // Hopefully relative error not so bad....
-    
-    // Max in 8 bits
-    //const uint8_t max_ms_8bit = 16; 
-    //const uint16_t max_ms_16bit = 4194;
-
-    // Compiler optimisations should remove most of this
-
-    const uint16_t top = 977;
-
-    uint8_t top_low = top & 0xFF;
-    uint8_t top_high = (top >> 8) & 0xFF;
-
-    // Ensure timer is halted
-    TCCR0B |= _BV(TSM);
-    TCCR0B |= _BV(PSR0);
-
-    TCCR0A |= _BV(TCW0);
-    OCR0B = top_high;
-
-    OCR0A = top_low;
-
-    // Ensure clock is initially cleared
-    // If it isn't then oopsies
-    TCNT0L = 0;
-    TCNT0H = 0;
-
-    // Enable interrupt 
-    TIMSK |= _BV(OCIE0A);
-
-    // Prepare clock select
-    TCCR0B |= _BV(CS02) | _BV(CS00);
-
-    // Start clock
-    TCCR0B &= ~_BV(TSM);
-
-    DDRB |= _BV(PIN_BLINK);
-    
-    PORTB |= _BV(PIN_BLINK);
-}
-
 
 #ifndef MODE_SINGLE_SHOT
 void AC_Sweep() {
@@ -228,9 +161,19 @@ void ADC_SingleShot() {
 }
 #endif
 
+void freqgen_test() {
+    freqgen_setup();
+    
+    freqgen_set(FREQGEN_N);
+
+    freqgen_enable();
+}
+
 int main() {
 
     blink_setup();
+
+    freqgen_test();
 
 #ifdef MODE_SINGLE_SHOT
     ADC_SingleShot();
