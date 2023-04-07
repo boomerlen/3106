@@ -3,33 +3,33 @@ build/bin/main.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000001b2  00000000  00000000  000000b4  2**1
+  0 .text         0000021c  00000000  00000000  000000b4  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000002  00800060  000001b2  00000266  2**0
+  1 .data         00000002  00800060  0000021c  000002d0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .fuse         00000003  00820000  00820000  00000268  2**0
+  2 .fuse         00000003  00820000  00820000  000002d2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .lock         00000001  00830000  00830000  0000026b  2**0
+  3 .lock         00000001  00830000  00830000  000002d5  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .comment      0000002f  00000000  00000000  0000026c  2**0
+  4 .comment      0000002f  00000000  00000000  000002d6  2**0
                   CONTENTS, READONLY
-  5 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000029c  2**2
+  5 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000308  2**2
                   CONTENTS, READONLY
-  6 .debug_aranges 000000e8  00000000  00000000  000002dc  2**0
+  6 .debug_aranges 000000e8  00000000  00000000  00000348  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000d87  00000000  00000000  000003c4  2**0
+  7 .debug_info   00000dec  00000000  00000000  00000430  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000930  00000000  00000000  0000114b  2**0
+  8 .debug_abbrev 0000097e  00000000  00000000  0000121c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000634  00000000  00000000  00001a7b  2**0
+  9 .debug_line   00000694  00000000  00000000  00001b9a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001fc  00000000  00000000  000020b0  2**2
+ 10 .debug_frame  0000021c  00000000  00000000  00002230  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000041f  00000000  00000000  000022ac  2**0
+ 11 .debug_str    0000044a  00000000  00000000  0000244c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000000f2  00000000  00000000  000026cb  2**0
+ 12 .debug_loc    00000184  00000000  00000000  00002896  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000018  00000000  00000000  000027bd  2**0
+ 13 .debug_ranges 00000018  00000000  00000000  00002a1a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -46,10 +46,10 @@ Disassembly of section .text:
   10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
   12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
   14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
-  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  16:	3f c0       	rjmp	.+126    	; 0x96 <__vector_11>
   18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
   1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
-  1c:	8c c0       	rjmp	.+280    	; 0x136 <__vector_14>
+  1c:	c1 c0       	rjmp	.+386    	; 0x1a0 <__vector_14>
   1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
   20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
   22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
@@ -67,16 +67,16 @@ Disassembly of section .text:
   32:	10 e0       	ldi	r17, 0x00	; 0
   34:	a0 e6       	ldi	r26, 0x60	; 96
   36:	b0 e0       	ldi	r27, 0x00	; 0
-  38:	e2 eb       	ldi	r30, 0xB2	; 178
-  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	ec e1       	ldi	r30, 0x1C	; 28
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
   3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
   3e:	05 90       	lpm	r0, Z+
   40:	0d 92       	st	X+, r0
   42:	a2 36       	cpi	r26, 0x62	; 98
   44:	b1 07       	cpc	r27, r17
   46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
-  48:	ab d0       	rcall	.+342    	; 0x1a0 <main>
-  4a:	b1 c0       	rjmp	.+354    	; 0x1ae <_exit>
+  48:	e0 d0       	rcall	.+448    	; 0x20a <main>
+  4a:	e6 c0       	rjmp	.+460    	; 0x218 <_exit>
 
 0000004c <__bad_interrupt>:
   4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
@@ -97,22 +97,22 @@ void ADC_SingleShot() {
     // Main function for the SingleShot mode of operation
 
     ADC_setup();
-  50:	22 d0       	rcall	.+68     	; 0x96 <ADC_setup>
+  50:	31 d0       	rcall	.+98     	; 0xb4 <ADC_setup>
     freqgen_setup();
-  52:	2f d0       	rcall	.+94     	; 0xb2 <freqgen_setup>
+  52:	64 d0       	rcall	.+200    	; 0x11c <freqgen_setup>
     GPIO_setup();
-  54:	63 d0       	rcall	.+198    	; 0x11c <GPIO_setup>
+  54:	98 d0       	rcall	.+304    	; 0x186 <GPIO_setup>
     display_setup();
-  56:	5f d0       	rcall	.+190    	; 0x116 <display_setup>
+  56:	94 d0       	rcall	.+296    	; 0x180 <display_setup>
 
     freqgen_set(FREQGEN_N);
   58:	80 e1       	ldi	r24, 0x10	; 16
   5a:	90 e0       	ldi	r25, 0x00	; 0
-  5c:	3c d0       	rcall	.+120    	; 0xd6 <freqgen_set>
+  5c:	71 d0       	rcall	.+226    	; 0x140 <freqgen_set>
 
     while (1) {
         if (GPIO_sample()) {
-  5e:	61 d0       	rcall	.+194    	; 0x122 <GPIO_sample>
+  5e:	96 d0       	rcall	.+300    	; 0x18c <GPIO_sample>
   60:	88 23       	and	r24, r24
   62:	e9 f3       	breq	.-6      	; 0x5e <ADC_SingleShot+0xe>
             // Blink isn't so important as to interrupt this
@@ -121,41 +121,41 @@ void ADC_SingleShot() {
 
             // Disable peak holding
             GPIO_pk_clr_on();
-  66:	62 d0       	rcall	.+196    	; 0x12c <GPIO_pk_clr_on>
+  66:	97 d0       	rcall	.+302    	; 0x196 <GPIO_pk_clr_on>
 
             // Start frequency generator
             freqgen_enable();
-  68:	2e d0       	rcall	.+92     	; 0xc6 <freqgen_enable>
+  68:	63 d0       	rcall	.+198    	; 0x130 <freqgen_enable>
 
             // Wait approx 1ms for steady state
             delay_ms(1);
   6a:	81 e0       	ldi	r24, 0x01	; 1
   6c:	90 e0       	ldi	r25, 0x00	; 0
-  6e:	3d d0       	rcall	.+122    	; 0xea <delay_ms>
+  6e:	72 d0       	rcall	.+228    	; 0x154 <delay_ms>
 
             // Enable peak holding
             GPIO_pk_clr_off();
-  70:	5f d0       	rcall	.+190    	; 0x130 <GPIO_pk_clr_off>
+  70:	94 d0       	rcall	.+296    	; 0x19a <GPIO_pk_clr_off>
 
             // Wait approx 5ms to stabilise
             delay_ms(5);
   72:	85 e0       	ldi	r24, 0x05	; 5
   74:	90 e0       	ldi	r25, 0x00	; 0
-  76:	39 d0       	rcall	.+114    	; 0xea <delay_ms>
+  76:	6e d0       	rcall	.+220    	; 0x154 <delay_ms>
 
             // Turn off freqgen to decrease noise
             freqgen_disable();
-  78:	2a d0       	rcall	.+84     	; 0xce <freqgen_disable>
+  78:	5f d0       	rcall	.+190    	; 0x138 <freqgen_disable>
 
             // Here we would enable some low-noise mode
 
             // Sample ADC
             uint16_t adc_val = ADC_sample();
-  7a:	0e d0       	rcall	.+28     	; 0x98 <ADC_sample>
+  7a:	23 d0       	rcall	.+70     	; 0xc2 <ADC_sample>
 
             // Clear peak holder
             GPIO_pk_clr_on();
-  7c:	57 d0       	rcall	.+174    	; 0x12c <GPIO_pk_clr_on>
+  7c:	8c d0       	rcall	.+280    	; 0x196 <GPIO_pk_clr_on>
 
             // Do some calculation
             convert(adc_val);
@@ -163,7 +163,7 @@ void ADC_SingleShot() {
             // Output to display
             display_set_word(5);
   7e:	85 e0       	ldi	r24, 0x05	; 5
-  80:	4c d0       	rcall	.+152    	; 0x11a <display_set_word>
+  80:	81 d0       	rcall	.+258    	; 0x184 <display_set_word>
 
             // Blink can keep on going
             sei();
@@ -173,7 +173,7 @@ void ADC_SingleShot() {
             delay_ms(300);
   84:	8c e2       	ldi	r24, 0x2C	; 44
   86:	91 e0       	ldi	r25, 0x01	; 1
-  88:	30 d0       	rcall	.+96     	; 0xea <delay_ms>
+  88:	65 d0       	rcall	.+202    	; 0x154 <delay_ms>
   8a:	e9 cf       	rjmp	.-46     	; 0x5e <ADC_SingleShot+0xe>
 
 0000008c <freqgen_test>:
@@ -183,369 +183,471 @@ void ADC_SingleShot() {
 
 void freqgen_test() {
     freqgen_setup();
-  8c:	12 d0       	rcall	.+36     	; 0xb2 <freqgen_setup>
+  8c:	47 d0       	rcall	.+142    	; 0x11c <freqgen_setup>
     
     freqgen_set(FREQGEN_N);
   8e:	80 e1       	ldi	r24, 0x10	; 16
   90:	90 e0       	ldi	r25, 0x00	; 0
-  92:	21 d0       	rcall	.+66     	; 0xd6 <freqgen_set>
+  92:	56 d0       	rcall	.+172    	; 0x140 <freqgen_set>
 
     freqgen_enable();
-  94:	18 c0       	rjmp	.+48     	; 0xc6 <freqgen_enable>
+  94:	4d c0       	rjmp	.+154    	; 0x130 <freqgen_enable>
 
-00000096 <ADC_setup>:
+00000096 <__vector_11>:
 
-#include "../include/ADC.h"
+#include <avr/io.h>
+#include <avr/sleep.h>
+#include <avr/interrupt.h>
+
+ISR(ADC_vect) {
+  96:	1f 92       	push	r1
+  98:	0f 92       	push	r0
+  9a:	0f b6       	in	r0, 0x3f	; 63
+  9c:	0f 92       	push	r0
+  9e:	11 24       	eor	r1, r1
+  a0:	8f 93       	push	r24
+    // Turn off sleep mode
+    sleep_disable();
+  a2:	85 b7       	in	r24, 0x35	; 53
+  a4:	8f 7d       	andi	r24, 0xDF	; 223
+  a6:	85 bf       	out	0x35, r24	; 53
+}
+  a8:	8f 91       	pop	r24
+  aa:	0f 90       	pop	r0
+  ac:	0f be       	out	0x3f, r0	; 63
+  ae:	0f 90       	pop	r0
+  b0:	1f 90       	pop	r1
+  b2:	18 95       	reti
+
+000000b4 <ADC_setup>:
 
 void ADC_setup() {
+    // Enable ADC interrupt
+    ADCSRA |= _BV(ADIE);
+  b4:	33 9a       	sbi	0x06, 3	; 6
 
+    // Reference set to VCC
+    // Set ADC input
+    ADMUX |= 0x00; // Single-ended ADC0 (PA0)
+  b6:	87 b1       	in	r24, 0x07	; 7
+  b8:	87 b9       	out	0x07, r24	; 7
+
+    // Set clock prescaling
+    // See datasheet section 15.5 (pg 144)
+    // Want between 50-200kHz from 1MHz.
+    // Division by 8 will achieve this.
+    ADCSRA |= _BV(ADPS1) | _BV(ADPS0);
+  ba:	86 b1       	in	r24, 0x06	; 6
+  bc:	83 60       	ori	r24, 0x03	; 3
+  be:	86 b9       	out	0x06, r24	; 6
 }
-  96:	08 95       	ret
+  c0:	08 95       	ret
 
-00000098 <ADC_sample>:
+000000c2 <ADC_sample>:
 
 uint16_t ADC_sample() {
-    return 0;
+    // Enable ADC
+    ADCSRA |= _BV(ADEN);
+  c2:	37 9a       	sbi	0x06, 7	; 6
+
+    // Prepare for sleep
+    sleep_enable();
+  c4:	85 b7       	in	r24, 0x35	; 53
+  c6:	80 62       	ori	r24, 0x20	; 32
+  c8:	85 bf       	out	0x35, r24	; 53
+    MCUCR |= _BV(SM0); // ADC noise reduction mode
+  ca:	85 b7       	in	r24, 0x35	; 53
+  cc:	88 60       	ori	r24, 0x08	; 8
+  ce:	85 bf       	out	0x35, r24	; 53
+    sei();
+  d0:	78 94       	sei
+
+    // Start conversion
+    ADCSRA |= _BV(ADSC);
+  d2:	36 9a       	sbi	0x06, 6	; 6
+
+    // Enable sleep mode (will be woken by ADC interrupt)
+    sleep_mode();
+  d4:	85 b7       	in	r24, 0x35	; 53
+  d6:	80 62       	ori	r24, 0x20	; 32
+  d8:	85 bf       	out	0x35, r24	; 53
+  da:	88 95       	sleep
+  dc:	85 b7       	in	r24, 0x35	; 53
+  de:	8f 7d       	andi	r24, 0xDF	; 223
+  e0:	85 bf       	out	0x35, r24	; 53
+
+    // Wait for SE to be clear
+    // Should happen immediately if all the sleep + wake stuff has worked
+    while (1) {
+        uint8_t se = (MCUCR & _BV(SE));
+        if (se == _BV(SE)) {
+  e2:	05 b6       	in	r0, 0x35	; 53
+  e4:	05 fe       	sbrs	r0, 5
+  e6:	fd cf       	rjmp	.-6      	; 0xe2 <ADC_sample+0x20>
+        }
+    }
+
+    // Extract data
+    // ADCL must be read first.
+    uint8_t adc_lower = ADCL;
+  e8:	24 b1       	in	r18, 0x04	; 4
+    uint8_t adc_upper = ADCH;
+  ea:	95 b1       	in	r25, 0x05	; 5
+
+    // Data is right justified
+    uint16_t adc_result = (adc_upper << 6) + adc_lower;
+  ec:	89 2f       	mov	r24, r25
+  ee:	90 e0       	ldi	r25, 0x00	; 0
+  f0:	00 24       	eor	r0, r0
+  f2:	96 95       	lsr	r25
+  f4:	87 95       	ror	r24
+  f6:	07 94       	ror	r0
+  f8:	96 95       	lsr	r25
+  fa:	87 95       	ror	r24
+  fc:	07 94       	ror	r0
+  fe:	98 2f       	mov	r25, r24
+ 100:	80 2d       	mov	r24, r0
+    return adc_result;
 }
-  98:	90 e0       	ldi	r25, 0x00	; 0
-  9a:	80 e0       	ldi	r24, 0x00	; 0
-  9c:	08 95       	ret
+ 102:	82 0f       	add	r24, r18
+ 104:	91 1d       	adc	r25, r1
+ 106:	08 95       	ret
 
-0000009e <_timerTopSet>:
-  9e:	ac 01       	movw	r20, r24
-  a0:	44 27       	eor	r20, r20
-  a2:	21 e0       	ldi	r18, 0x01	; 1
-  a4:	49 30       	cpi	r20, 0x09	; 9
-  a6:	51 05       	cpc	r21, r1
-  a8:	08 f4       	brcc	.+2      	; 0xac <_timerTopSet+0xe>
-  aa:	20 e0       	ldi	r18, 0x00	; 0
-  ac:	25 bd       	out	0x25, r18	; 37
-  ae:	8a bd       	out	0x2a, r24	; 42
-  b0:	08 95       	ret
+00000108 <_timerTopSet>:
+ 108:	ac 01       	movw	r20, r24
+ 10a:	44 27       	eor	r20, r20
+ 10c:	21 e0       	ldi	r18, 0x01	; 1
+ 10e:	49 30       	cpi	r20, 0x09	; 9
+ 110:	51 05       	cpc	r21, r1
+ 112:	08 f4       	brcc	.+2      	; 0x116 <_timerTopSet+0xe>
+ 114:	20 e0       	ldi	r18, 0x00	; 0
+ 116:	25 bd       	out	0x25, r18	; 37
+ 118:	8a bd       	out	0x2a, r24	; 42
+ 11a:	08 95       	ret
 
-000000b2 <freqgen_setup>:
+0000011c <freqgen_setup>:
     OCR1D = low;
 }
 
 void freqgen_setup() {
     // Clear prescaler
     TCCR1B |= _BV(PSR1);
-  b2:	8f b5       	in	r24, 0x2f	; 47
-  b4:	80 64       	ori	r24, 0x40	; 64
-  b6:	8f bd       	out	0x2f, r24	; 47
+ 11c:	8f b5       	in	r24, 0x2f	; 47
+ 11e:	80 64       	ori	r24, 0x40	; 64
+ 120:	8f bd       	out	0x2f, r24	; 47
 
     // Set OCW1D to toggle on compare match mode
     TCCR1C |= _BV(COM1D0);
-  b8:	87 b5       	in	r24, 0x27	; 39
-  ba:	84 60       	ori	r24, 0x04	; 4
-  bc:	87 bd       	out	0x27, r24	; 39
+ 122:	87 b5       	in	r24, 0x27	; 39
+ 124:	84 60       	ori	r24, 0x04	; 4
+ 126:	87 bd       	out	0x27, r24	; 39
 
     // Ensure PLL is off 
     // (Using 1MHz system clock as source)
     PLLCSR &= ~(_BV(PCKE) | _BV(PLLE));
-  be:	89 b5       	in	r24, 0x29	; 41
-  c0:	89 7f       	andi	r24, 0xF9	; 249
-  c2:	89 bd       	out	0x29, r24	; 41
+ 128:	89 b5       	in	r24, 0x29	; 41
+ 12a:	89 7f       	andi	r24, 0xF9	; 249
+ 12c:	89 bd       	out	0x29, r24	; 41
 }
-  c4:	08 95       	ret
+ 12e:	08 95       	ret
 
-000000c6 <freqgen_enable>:
+00000130 <freqgen_enable>:
 
 void freqgen_enable() {
     TCCR1B |= _BV(CS10);
-  c6:	8f b5       	in	r24, 0x2f	; 47
-  c8:	81 60       	ori	r24, 0x01	; 1
-  ca:	8f bd       	out	0x2f, r24	; 47
+ 130:	8f b5       	in	r24, 0x2f	; 47
+ 132:	81 60       	ori	r24, 0x01	; 1
+ 134:	8f bd       	out	0x2f, r24	; 47
 }
-  cc:	08 95       	ret
+ 136:	08 95       	ret
 
-000000ce <freqgen_disable>:
+00000138 <freqgen_disable>:
 
 void freqgen_disable() {
     TCCR1B &= ~(_BV(CS13) | _BV(CS12) | _BV(CS11) | _BV(CS10));
-  ce:	8f b5       	in	r24, 0x2f	; 47
-  d0:	80 7f       	andi	r24, 0xF0	; 240
-  d2:	8f bd       	out	0x2f, r24	; 47
+ 138:	8f b5       	in	r24, 0x2f	; 47
+ 13a:	80 7f       	andi	r24, 0xF0	; 240
+ 13c:	8f bd       	out	0x2f, r24	; 47
 }
-  d4:	08 95       	ret
+ 13e:	08 95       	ret
 
-000000d6 <freqgen_set>:
+00000140 <freqgen_set>:
 
 
 
 void _timerTopSet(uint16_t top) {
     // Split into upper and lower
     uint8_t high = (top & 0xFF00) > 8;
-  d6:	ac 01       	movw	r20, r24
-  d8:	44 27       	eor	r20, r20
-  da:	21 e0       	ldi	r18, 0x01	; 1
-  dc:	49 30       	cpi	r20, 0x09	; 9
-  de:	51 05       	cpc	r21, r1
-  e0:	08 f4       	brcc	.+2      	; 0xe4 <freqgen_set+0xe>
-  e2:	20 e0       	ldi	r18, 0x00	; 0
+ 140:	ac 01       	movw	r20, r24
+ 142:	44 27       	eor	r20, r20
+ 144:	21 e0       	ldi	r18, 0x01	; 1
+ 146:	49 30       	cpi	r20, 0x09	; 9
+ 148:	51 05       	cpc	r21, r1
+ 14a:	08 f4       	brcc	.+2      	; 0x14e <freqgen_set+0xe>
+ 14c:	20 e0       	ldi	r18, 0x00	; 0
     uint8_t low = (top & 0xFF);
 
     TC1H = high;
-  e4:	25 bd       	out	0x25, r18	; 37
+ 14e:	25 bd       	out	0x25, r18	; 37
     OCR1D = low;
-  e6:	8a bd       	out	0x2a, r24	; 42
+ 150:	8a bd       	out	0x2a, r24	; 42
     TCCR1B &= ~(_BV(CS13) | _BV(CS12) | _BV(CS11) | _BV(CS10));
 }
 
 void freqgen_set(uint16_t top) {
     _timerTopSet(top);
-  e8:	08 95       	ret
+ 152:	08 95       	ret
 
-000000ea <delay_ms>:
+00000154 <delay_ms>:
 // Defined at compiler invokation
 
 // Fast CPU clock
 // #define F_CPU 8000000UL
 
 void delay_ms(int ms) {
-  ea:	9c 01       	movw	r18, r24
+ 154:	9c 01       	movw	r18, r24
     // Just a busy loop
     uint16_t top = ms * 250;
-  ec:	88 0f       	add	r24, r24
-  ee:	99 1f       	adc	r25, r25
-  f0:	82 95       	swap	r24
-  f2:	92 95       	swap	r25
-  f4:	90 7f       	andi	r25, 0xF0	; 240
-  f6:	98 27       	eor	r25, r24
-  f8:	80 7f       	andi	r24, 0xF0	; 240
-  fa:	98 27       	eor	r25, r24
-  fc:	82 1b       	sub	r24, r18
-  fe:	93 0b       	sbc	r25, r19
- 100:	88 0f       	add	r24, r24
- 102:	99 1f       	adc	r25, r25
- 104:	88 0f       	add	r24, r24
- 106:	99 1f       	adc	r25, r25
- 108:	82 0f       	add	r24, r18
- 10a:	93 1f       	adc	r25, r19
- 10c:	88 0f       	add	r24, r24
- 10e:	99 1f       	adc	r25, r25
+ 156:	88 0f       	add	r24, r24
+ 158:	99 1f       	adc	r25, r25
+ 15a:	82 95       	swap	r24
+ 15c:	92 95       	swap	r25
+ 15e:	90 7f       	andi	r25, 0xF0	; 240
+ 160:	98 27       	eor	r25, r24
+ 162:	80 7f       	andi	r24, 0xF0	; 240
+ 164:	98 27       	eor	r25, r24
+ 166:	82 1b       	sub	r24, r18
+ 168:	93 0b       	sbc	r25, r19
+ 16a:	88 0f       	add	r24, r24
+ 16c:	99 1f       	adc	r25, r25
+ 16e:	88 0f       	add	r24, r24
+ 170:	99 1f       	adc	r25, r25
+ 172:	82 0f       	add	r24, r18
+ 174:	93 1f       	adc	r25, r19
+ 176:	88 0f       	add	r24, r24
+ 178:	99 1f       	adc	r25, r25
     milliseconds can be achieved.
  */
 void
 _delay_loop_2(uint16_t __count)
 {
 	__asm__ volatile (
- 110:	01 97       	sbiw	r24, 0x01	; 1
- 112:	f1 f7       	brne	.-4      	; 0x110 <__DATA_REGION_LENGTH__+0x10>
+ 17a:	01 97       	sbiw	r24, 0x01	; 1
+ 17c:	f1 f7       	brne	.-4      	; 0x17a <__stack+0x1b>
 
     _delay_loop_2(top);
- 114:	08 95       	ret
+ 17e:	08 95       	ret
 
-00000116 <display_setup>:
+00000180 <display_setup>:
 
 #include <inttypes.h>
 
 void display_setup() {
 
 }
- 116:	08 95       	ret
+ 180:	08 95       	ret
 
-00000118 <display_set_digit>:
+00000182 <display_set_digit>:
 
 void display_set_digit(uint8_t digit, uint8_t value) {
 
 }
- 118:	08 95       	ret
+ 182:	08 95       	ret
 
-0000011a <display_set_word>:
+00000184 <display_set_word>:
 
 void display_set_word(uint8_t word) {
 
- 11a:	08 95       	ret
+ 184:	08 95       	ret
 
-0000011c <GPIO_setup>:
+00000186 <GPIO_setup>:
 // DDXN sets data pin direction
 // PORTXN is the value of the pin, read or write
 // PINXN 
 
 void GPIO_setup() {
     DDRB |= _BV(PIN_PK_CLR); // PB4 is output
- 11c:	bc 9a       	sbi	0x17, 4	; 23
+ 186:	bc 9a       	sbi	0x17, 4	; 23
     PORTB |= _BV(PIN_SW); // PB6 has pull-up
- 11e:	c6 9a       	sbi	0x18, 6	; 24
+ 188:	c6 9a       	sbi	0x18, 6	; 24
 }
- 120:	08 95       	ret
+ 18a:	08 95       	ret
 
-00000122 <GPIO_sample>:
+0000018c <GPIO_sample>:
 
 bool GPIO_sample() {
     return PINB & _BV(PIN_SW);
- 122:	86 b3       	in	r24, 0x16	; 22
+ 18c:	86 b3       	in	r24, 0x16	; 22
 }
- 124:	86 fb       	bst	r24, 6
- 126:	88 27       	eor	r24, r24
- 128:	80 f9       	bld	r24, 0
- 12a:	08 95       	ret
+ 18e:	86 fb       	bst	r24, 6
+ 190:	88 27       	eor	r24, r24
+ 192:	80 f9       	bld	r24, 0
+ 194:	08 95       	ret
 
-0000012c <GPIO_pk_clr_on>:
+00000196 <GPIO_pk_clr_on>:
 
 void GPIO_pk_clr_on() {
     PORTB |= _BV(PIN_PK_CLR);
- 12c:	c4 9a       	sbi	0x18, 4	; 24
+ 196:	c4 9a       	sbi	0x18, 4	; 24
 }
- 12e:	08 95       	ret
+ 198:	08 95       	ret
 
-00000130 <GPIO_pk_clr_off>:
+0000019a <GPIO_pk_clr_off>:
 
 void GPIO_pk_clr_off() {
     PORTB &= ~_BV(PIN_PK_CLR);
- 130:	c4 98       	cbi	0x18, 4	; 24
+ 19a:	c4 98       	cbi	0x18, 4	; 24
 }
- 132:	08 95       	ret
+ 19c:	08 95       	ret
 
-00000134 <GPIO_pk_clr_pulse>:
+0000019e <GPIO_pk_clr_pulse>:
 
 void GPIO_pk_clr_pulse() {
     
- 134:	08 95       	ret
+ 19e:	08 95       	ret
 
-00000136 <__vector_14>:
+000001a0 <__vector_14>:
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
 static bool led_on = true;
 
 ISR(TIMER0_COMPA_vect) {
- 136:	1f 92       	push	r1
- 138:	0f 92       	push	r0
- 13a:	0f b6       	in	r0, 0x3f	; 63
- 13c:	0f 92       	push	r0
- 13e:	11 24       	eor	r1, r1
- 140:	8f 93       	push	r24
+ 1a0:	1f 92       	push	r1
+ 1a2:	0f 92       	push	r0
+ 1a4:	0f b6       	in	r0, 0x3f	; 63
+ 1a6:	0f 92       	push	r0
+ 1a8:	11 24       	eor	r1, r1
+ 1aa:	8f 93       	push	r24
     cli();
- 142:	f8 94       	cli
+ 1ac:	f8 94       	cli
     TCNT0L = 0;
- 144:	12 be       	out	0x32, r1	; 50
+ 1ae:	12 be       	out	0x32, r1	; 50
     TCNT0H = 0;
- 146:	14 ba       	out	0x14, r1	; 20
+ 1b0:	14 ba       	out	0x14, r1	; 20
 
     if (led_on) {
- 148:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
- 14c:	81 11       	cpse	r24, r1
- 14e:	0b c0       	rjmp	.+22     	; 0x166 <__stack+0x7>
+ 1b2:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 1b6:	81 11       	cpse	r24, r1
+ 1b8:	0b c0       	rjmp	.+22     	; 0x1d0 <__vector_14+0x30>
         PORTB &= _BV(PIN_BLINK);
     } else {
         PORTB |= _BV(PIN_BLINK);
- 150:	c5 9a       	sbi	0x18, 5	; 24
+ 1ba:	c3 9a       	sbi	0x18, 3	; 24
     }
 
     led_on = ~led_on;
- 152:	81 e0       	ldi	r24, 0x01	; 1
- 154:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 1bc:	81 e0       	ldi	r24, 0x01	; 1
+ 1be:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
     sei();
- 158:	78 94       	sei
+ 1c2:	78 94       	sei
 }
- 15a:	8f 91       	pop	r24
- 15c:	0f 90       	pop	r0
- 15e:	0f be       	out	0x3f, r0	; 63
- 160:	0f 90       	pop	r0
- 162:	1f 90       	pop	r1
- 164:	18 95       	reti
+ 1c4:	8f 91       	pop	r24
+ 1c6:	0f 90       	pop	r0
+ 1c8:	0f be       	out	0x3f, r0	; 63
+ 1ca:	0f 90       	pop	r0
+ 1cc:	1f 90       	pop	r1
+ 1ce:	18 95       	reti
     cli();
     TCNT0L = 0;
     TCNT0H = 0;
 
     if (led_on) {
         PORTB &= _BV(PIN_BLINK);
- 166:	88 b3       	in	r24, 0x18	; 24
- 168:	80 72       	andi	r24, 0x20	; 32
- 16a:	88 bb       	out	0x18, r24	; 24
- 16c:	f2 cf       	rjmp	.-28     	; 0x152 <__vector_14+0x1c>
+ 1d0:	88 b3       	in	r24, 0x18	; 24
+ 1d2:	88 70       	andi	r24, 0x08	; 8
+ 1d4:	88 bb       	out	0x18, r24	; 24
+ 1d6:	f2 cf       	rjmp	.-28     	; 0x1bc <__vector_14+0x1c>
 
-0000016e <blink_setup>:
+000001d8 <blink_setup>:
 
     uint8_t top_low = top & 0xFF;
     uint8_t top_high = (top >> 8) & 0xFF;
 
     // Ensure timer is halted
     TCCR0B |= _BV(TSM);
- 16e:	83 b7       	in	r24, 0x33	; 51
- 170:	80 61       	ori	r24, 0x10	; 16
- 172:	83 bf       	out	0x33, r24	; 51
+ 1d8:	83 b7       	in	r24, 0x33	; 51
+ 1da:	80 61       	ori	r24, 0x10	; 16
+ 1dc:	83 bf       	out	0x33, r24	; 51
     TCCR0B |= _BV(PSR0);
- 174:	83 b7       	in	r24, 0x33	; 51
- 176:	88 60       	ori	r24, 0x08	; 8
- 178:	83 bf       	out	0x33, r24	; 51
+ 1de:	83 b7       	in	r24, 0x33	; 51
+ 1e0:	88 60       	ori	r24, 0x08	; 8
+ 1e2:	83 bf       	out	0x33, r24	; 51
 
     TCCR0A |= _BV(TCW0);
- 17a:	af 9a       	sbi	0x15, 7	; 21
+ 1e4:	af 9a       	sbi	0x15, 7	; 21
     OCR0B = top_high;
- 17c:	83 e0       	ldi	r24, 0x03	; 3
- 17e:	82 bb       	out	0x12, r24	; 18
+ 1e6:	83 e0       	ldi	r24, 0x03	; 3
+ 1e8:	82 bb       	out	0x12, r24	; 18
 
     OCR0A = top_low;
- 180:	81 ed       	ldi	r24, 0xD1	; 209
- 182:	83 bb       	out	0x13, r24	; 19
+ 1ea:	81 ed       	ldi	r24, 0xD1	; 209
+ 1ec:	83 bb       	out	0x13, r24	; 19
 
     // Ensure clock is initially cleared
     // If it isn't then oopsies
     TCNT0L = 0;
- 184:	12 be       	out	0x32, r1	; 50
+ 1ee:	12 be       	out	0x32, r1	; 50
     TCNT0H = 0;
- 186:	14 ba       	out	0x14, r1	; 20
+ 1f0:	14 ba       	out	0x14, r1	; 20
 
     // Enable interrupt 
     TIMSK |= _BV(OCIE0A);
- 188:	89 b7       	in	r24, 0x39	; 57
- 18a:	80 61       	ori	r24, 0x10	; 16
- 18c:	89 bf       	out	0x39, r24	; 57
+ 1f2:	89 b7       	in	r24, 0x39	; 57
+ 1f4:	80 61       	ori	r24, 0x10	; 16
+ 1f6:	89 bf       	out	0x39, r24	; 57
 
     // Prepare clock select
     TCCR0B |= _BV(CS02) | _BV(CS00);
- 18e:	83 b7       	in	r24, 0x33	; 51
- 190:	85 60       	ori	r24, 0x05	; 5
- 192:	83 bf       	out	0x33, r24	; 51
+ 1f8:	83 b7       	in	r24, 0x33	; 51
+ 1fa:	85 60       	ori	r24, 0x05	; 5
+ 1fc:	83 bf       	out	0x33, r24	; 51
 
     // Start clock
     TCCR0B &= ~_BV(TSM);
- 194:	83 b7       	in	r24, 0x33	; 51
- 196:	8f 7e       	andi	r24, 0xEF	; 239
- 198:	83 bf       	out	0x33, r24	; 51
+ 1fe:	83 b7       	in	r24, 0x33	; 51
+ 200:	8f 7e       	andi	r24, 0xEF	; 239
+ 202:	83 bf       	out	0x33, r24	; 51
 
     DDRB |= _BV(PIN_BLINK);
- 19a:	bd 9a       	sbi	0x17, 5	; 23
+ 204:	bb 9a       	sbi	0x17, 3	; 23
     
     PORTB |= _BV(PIN_BLINK);
- 19c:	c5 9a       	sbi	0x18, 5	; 24
- 19e:	08 95       	ret
+ 206:	c3 9a       	sbi	0x18, 3	; 24
+ 208:	08 95       	ret
 
-000001a0 <main>:
+0000020a <main>:
 }
 
 int main() {
 
     blink_setup();
- 1a0:	e6 df       	rcall	.-52     	; 0x16e <blink_setup>
+ 20a:	e6 df       	rcall	.-52     	; 0x1d8 <blink_setup>
 
 }
 #endif
 
 void freqgen_test() {
     freqgen_setup();
- 1a2:	87 df       	rcall	.-242    	; 0xb2 <freqgen_setup>
+ 20c:	87 df       	rcall	.-242    	; 0x11c <freqgen_setup>
     
     freqgen_set(FREQGEN_N);
- 1a4:	80 e1       	ldi	r24, 0x10	; 16
- 1a6:	90 e0       	ldi	r25, 0x00	; 0
- 1a8:	96 df       	rcall	.-212    	; 0xd6 <freqgen_set>
+ 20e:	80 e1       	ldi	r24, 0x10	; 16
+ 210:	90 e0       	ldi	r25, 0x00	; 0
+ 212:	96 df       	rcall	.-212    	; 0x140 <freqgen_set>
 
     freqgen_enable();
- 1aa:	8d df       	rcall	.-230    	; 0xc6 <freqgen_enable>
+ 214:	8d df       	rcall	.-230    	; 0x130 <freqgen_enable>
     blink_setup();
 
     freqgen_test();
 
 #ifdef MODE_SINGLE_SHOT
     ADC_SingleShot();
- 1ac:	51 df       	rcall	.-350    	; 0x50 <ADC_SingleShot>
+ 216:	1c df       	rcall	.-456    	; 0x50 <ADC_SingleShot>
 
-000001ae <_exit>:
- 1ae:	f8 94       	cli
+00000218 <_exit>:
+ 218:	f8 94       	cli
 
-000001b0 <__stop_program>:
- 1b0:	ff cf       	rjmp	.-2      	; 0x1b0 <__stop_program>
+0000021a <__stop_program>:
+ 21a:	ff cf       	rjmp	.-2      	; 0x21a <__stop_program>

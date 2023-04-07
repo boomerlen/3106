@@ -8,8 +8,6 @@
 #ifndef BLINK_H
 #define BLINK_H
 
-#define PIN_BLINK PB5
-
 void blink_setup();
 
 #endif // BLINK_H

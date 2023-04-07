@@ -20,6 +20,7 @@
 #include "include/delay.h"
 #include "include/Display.h"
 #include "include/blink.h"
+#include "include/settings.h"
 
 #ifdef MODE_SINGLE_SHOT
 #include "include/ADC.h"
@@ -61,28 +62,6 @@ FUSES = {
 };
 #endif
 
-///////////////////////////
-// Pulse generator setup //
-///////////////////////////
-
-// freqgen_set(n) depends on peripheral clock frequency (and any prescaling)
-// The output pulse generator is nominally 30kHz but will have
-// quantisation errors as detailed in the table below.
-// ----------------------------
-// | F0    | n    | f_actual    |
-// | 1MHz  | 16   | 31.25kHz    |
-// | 8MHz  | 133  | 30.0752 kHz |
-// | 64MHz | 1067 | 29.9906 kHz | --> Not realisable with 10-bit timer1
-// ------------------------------
-
-// Note that at 64MHz, the lowest clock rate deliverable is 31.25kHz (n = 1023).
-// Consequently, 64MHz is too fast for single measurement operation centred at 30kHz
-// It is also unnecessary.
-
-// 64MHz is only useful in AC_Sweep() mode where greater frequency resolution is desired.
-
-// Set the timer1 top given the clock and with reference to the above table below
-#define FREQGEN_N 16
 
 ///////////////
 // Lock Bits //

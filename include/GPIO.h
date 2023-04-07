@@ -8,9 +8,6 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#define GPIO_PK_CLR 1
-#define GPIO_SAMPLE 2
-
 #include <stdbool.h>
 
 void GPIO_setup();

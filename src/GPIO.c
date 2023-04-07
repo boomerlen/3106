@@ -6,6 +6,7 @@
 // HS, MR 3/4/23
 
 #include "../include/GPIO.h"
+#include "../include/settings.h"
 
 #include <avr/io.h>
 

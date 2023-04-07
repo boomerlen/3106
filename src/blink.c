@@ -6,6 +6,7 @@
 // HS, MR 6/4/23
 
 #include "../include/blink.h"
+#include "../include/settings.h"
 
 #include <stdbool.h>
 #include <avr/interrupt.h>
