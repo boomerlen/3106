@@ -12,12 +12,12 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-static bool led_on = true;
+static volatile bool led_on;
 
 ISR(TIMER0_COMPA_vect) {
     cli();
-    TCNT0L = 0;
     TCNT0H = 0;
+    TCNT0L = 0;
 
     if (led_on) {
         PORTB &= _BV(PIN_BLINK);
@@ -49,6 +49,8 @@ void blink_setup() {
     uint8_t top_low = top & 0xFF;
     uint8_t top_high = (top >> 8) & 0xFF;
 
+    led_on = true;
+
     // Ensure timer is halted
     TCCR0B |= _BV(TSM);
     TCCR0B |= _BV(PSR0);
@@ -60,11 +62,12 @@ void blink_setup() {
 
     // Ensure clock is initially cleared
     // If it isn't then oopsies
-    TCNT0L = 0;
     TCNT0H = 0;
+    TCNT0L = 0;
 
     // Enable interrupt 
     TIMSK |= _BV(OCIE0A);
+    sei();
 
     // Prepare clock select
     TCCR0B |= _BV(CS02) | _BV(CS00);

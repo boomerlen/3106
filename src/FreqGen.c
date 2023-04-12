@@ -9,6 +9,7 @@
 
 #include <inttypes.h>
 
+#include <avr/interrupt.h>
 #include <avr/io.h>
 
 // This is implemented using tiny461a Timer (counter) 1
@@ -20,31 +21,33 @@
 // 1. Output is going into OC1D
 // 2. Want to use Normal Mode and "toggle Compare Output Mode"
 
+ISR(TIMER1_COMPD_vect) {
 
-
-void _timerTopSet(uint16_t top) {
-    // Split into upper and lower
-    uint8_t high = (top & 0xFF00) > 8;
-    uint8_t low = (top & 0xFF);
-
-    TC1H = high;
-    OCR1D = low;
 }
 
 void freqgen_setup() {
     // Clear prescaler
-    TCCR1B |= _BV(PSR1);
+    //TCCR1B |= _BV(PSR1);
 
     // Set OCW1D to toggle on compare match mode
     TCCR1C |= _BV(COM1D0);
 
     // Ensure PLL is off 
     // (Using 1MHz system clock as source)
-    PLLCSR &= ~(_BV(PCKE) | _BV(PLLE));
+    //PLLCSR |= _BV(PCKE) | _BV(PLLE);
+
+    DDRB |= _BV(PB5);
+
+    // Turn on output compare interrupt
+    TIMSK |= _BV(OCIE1D);
+
+    sei();
 }
 
 void freqgen_enable() {
+    freqgen_disable();
     TCCR1B |= _BV(CS10);
+
 }
 
 void freqgen_disable() {
@@ -52,5 +55,9 @@ void freqgen_disable() {
 }
 
 void freqgen_set(uint16_t top) {
-    _timerTopSet(top);
+    uint8_t high = (top & 0xFF00) >> 8;
+    uint8_t low = (top & 0xFF);
+
+    TC1H = high;
+    OCR1C = top;
 }

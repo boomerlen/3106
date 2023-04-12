@@ -10,6 +10,9 @@
 
 #include <inttypes.h>
 
+// Note that PA0 has been selected as single-ended ADC
+// input (deep inside the .c file)
+
 void ADC_setup();
 
 uint16_t ADC_sample();

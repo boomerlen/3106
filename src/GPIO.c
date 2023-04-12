@@ -28,7 +28,13 @@ void GPIO_setup() {
 }
 
 bool GPIO_sample() {
-    return PINB & _BV(PIN_SW);
+    // In debug modes just leave off
+    return false;
+
+    // Or on
+    // return true;
+    
+    //return PINB & _BV(PIN_SW);
 }
 
 void GPIO_pk_clr_on() {

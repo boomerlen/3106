@@ -14,12 +14,14 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay_basic.h>
 
 #include "include/FreqGen.h"
 #include "include/GPIO.h"
 #include "include/delay.h"
 #include "include/Display.h"
 #include "include/blink.h"
+//#include "include/SPI_print.h"
 #include "include/settings.h"
 
 #ifdef MODE_SINGLE_SHOT
@@ -115,7 +117,8 @@ void ADC_SingleShot() {
             // Turn off freqgen to decrease noise
             freqgen_disable();
 
-            // Here we would enable some low-noise mode
+            // ADC_sample invokes low-noise mode
+            // which shuts off system clocks etc
 
             // Sample ADC
             uint16_t adc_val = ADC_sample();
@@ -148,14 +151,40 @@ void freqgen_test() {
     freqgen_enable();
 }
 
+void ADC_test() {
+    // Continusouly sample ADC and compare against some voltage threshold
+    ADC_setup();
+
+    // Configure pin PA4 as cutoff-led
+    DDRA |= _BV(PA4);
+
+    // Note formula for actual conversion value:
+    // ADC = VIN / VCC * 1024 (ideally, without any errors)
+
+    uint16_t cutoff = 700; // About VCC/3
+
+    while (1) {
+        uint16_t adc_val = ADC_sample();
+
+        if (adc_val > cutoff) {
+            PORTA |= _BV(PA4);
+        } else {
+            PORTA &= ~_BV(PA4);
+        }
+
+        _delay_basic(100);
+    }
+}
+
 int main() {
 
     blink_setup();
 
     freqgen_test();
+    ADC_test();
 
 #ifdef MODE_SINGLE_SHOT
-    ADC_SingleShot();
+    //ADC_SingleShot();
 #else
     AC_Sweep();
 #endif

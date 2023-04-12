@@ -42,7 +42,9 @@
 // 64MHz is only useful in AC_Sweep() mode where greater frequency resolution is desired.
 
 // Set the timer1 top given the clock and with reference to the above table below
-#define FREQGEN_N 16
+// Aim for 25kHz
+// We get 25kHz with n = 20 at F0 = 1MHz
+#define FREQGEN_N 14
 
 ///////////////
 // Pin Setup //
@@ -59,5 +61,9 @@
 // Sample button pin
 #define PIN_SW PB6
 
+///////////////////
+// Serial Buffer //
+///////////////////
+#define SERIAL_BUF_LEN 16
 
 #endif 
