@@ -44,7 +44,7 @@
 // Set the timer1 top given the clock and with reference to the above table below
 // Aim for 25kHz
 // We get 25kHz with n = 20 at F0 = 1MHz
-#define FREQGEN_N 14
+#define FREQGEN_N 700
 
 ///////////////
 // Pin Setup //

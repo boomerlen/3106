@@ -34,7 +34,7 @@ void freqgen_setup() {
 
     // Ensure PLL is off 
     // (Using 1MHz system clock as source)
-    //PLLCSR |= _BV(PCKE) | _BV(PLLE);
+    PLLCSR |= _BV(PCKE) | _BV(PLLE);
 
     DDRB |= _BV(PB5);
 
