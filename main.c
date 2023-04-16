@@ -4,15 +4,10 @@
 //
 // HS, MR, 3/4/23
 
-// See settings.h for modifiable settings
-
 #include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay_basic.h>
 
 #include "include/FreqGen.h"
 #include "include/ADC.h"
-
 
 /////////////////
 // Clock Setup //
@@ -56,6 +51,8 @@ int main() {
     freqgen_setup();
     freqgen_set(FREQGEN_N);
     freqgen_enable();
+
+    // If used, sample ADC and display results accordingly
 
     ADC_setup();
 

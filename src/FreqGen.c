@@ -32,8 +32,8 @@ void freqgen_setup() {
     // Set OCW1D to toggle on compare match mode
     TCCR1C |= _BV(COM1D0);
 
-    // Ensure PLL is off 
-    // (Using 1MHz system clock as source)
+    // Turn PLL on for greater frequency resolution 
+    // (Using 64MHz PLL clock from 8MHz system clock as source)
     PLLCSR |= _BV(PCKE) | _BV(PLLE);
 
     DDRB |= _BV(PB5);

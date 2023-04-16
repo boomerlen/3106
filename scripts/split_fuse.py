@@ -45,6 +45,8 @@ ih_l.fromdict(ih_l_dict)
 ih_h.fromdict(ih_h_dict)
 ih_e.fromdict(ih_e_dict)
 
+# Order around the wrong way. 
+# Means this looks a bit messy but I promise that it is fine
 ih_l.write_hex_file(efuse)
 ih_h.write_hex_file(hfuse)
 ih_e.write_hex_file(lfuse)
